@@ -28,9 +28,13 @@ std::string credit_card::credit_card_info() {
   std::string message = "Number: "; 
   message += std::to_string( cc_number);
   message += "\nLimit: ";
-  message += std::to_string(limit);
+  std::string limit_str =  std::to_string(limit);
+  limit_str = limit_str.substr(0,limit_str.find('.') + 3);
+  message += limit_str;
   message += "\nCurrent Balance: ";
-  message += std::to_string(current_balance);
+  std::string balance_str = std::to_string(current_balance);
+  balance_str = balance_str.substr(0,balance_str.find('.') + 3);
+  message += balance_str;
   message += "\n";   
   return message;
 };
