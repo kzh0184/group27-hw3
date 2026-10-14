@@ -1,4 +1,7 @@
-#include <string>
+#ifndef STRING
+#define STRING
+#include<string>
+#endif
 
 #ifndef CREDIT_CARD_H
 #define CREDIT_CARD_H
