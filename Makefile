@@ -7,6 +7,11 @@ all: main.cpp $(OBJS)
 	mkdir -p build
 	$(CC) $(OBJS) -o build/MAIN.out
 
+run: main.cpp $(OBJS)
+	mkdir -p build
+	$(CC) $(OBJS) -o build/MAIN.out
+	./build/MAIN.out
+
 %.o: %.cpp
 	@echo making $^
 	$(CC) -c $(SRCS)

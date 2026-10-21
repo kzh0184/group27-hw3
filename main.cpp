@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <cstdlib>
+#include <random>
 
 #include "address.h"
 #include "credit_card.h"
@@ -19,7 +19,7 @@ using std::string;
 
 int main()
 {
-
+  // configure std output 
 	//import from text files
 	ifstream people_file("people.txt");
 	if (!people_file.is_open())
@@ -31,7 +31,7 @@ int main()
 	people_file >> num_people;
 	people_file.ignore(); // ignore the newline character after the number of people
 	
-	ifstream cc_file("credit_cards.txt");
+	ifstream cc_file("credit_card.txt");
 	if (!cc_file.is_open())
 	{
 		cout << "Error opening credit_cards.txt" << endl;
@@ -85,7 +85,7 @@ int main()
 	int num_products = 0;
 	product_file >> num_products;
 	product_file.ignore(); // ignore the newline character after the number of products
-	store1.num_products(num_products);
+	// store1.num_products(num_products);
 	for (int i = 0; i < num_products; i++)
 	{
 		string product_name, product_description;
@@ -98,6 +98,7 @@ int main()
 		product temp_product{product_name, product_description, product_price};
 		store1.add_product(temp_product);
 	}
+  std::cout << store1.num_products() << '\n';
 	product_file.close();
 	
 	//print store info after you finish importing info
@@ -106,6 +107,22 @@ int main()
 	cout << store1.store_info() << endl << endl;
 
 	//make random number of random transactions
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> transaction_distrib(1,100); // random amount of transactions;
+  std::uniform_int_distribution<> product_distrib(1,10); // random product;
+  std::uniform_int_distribution<> person_distrib(1,store1.num_customers()); // random product;
+  int num_transactions = transaction_distrib(gen);
+  transaction purchase;
+
+  for(int i = 0; i < num_transactions; i++){
+    purchase.purchased_item = store1.get_product(product_distrib(gen));
+    purchase.quantity= product_distrib(gen);
+    purchase.transaction_number = store1.num_transactions() + 1;
+    purchase.purchased_item = store1.get_product(product_distrib(gen));
+    purchase.customer = store1.get_customer(person_distrib(gen));
+    store1.add_transaction(purchase);
+  }
 
 	//print store info at the end
 	cout << "Store info: " << endl << endl;

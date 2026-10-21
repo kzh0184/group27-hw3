@@ -31,8 +31,8 @@ bool Store::add_product(product item) {
   if(num_products_ > std::size(products_) -1) {
     return false; // not enough space in array
   } 
-  num_products_ += 1;
   products_[num_products_] = item;
+  num_products_ += 1;
   return true; 
 }
 
@@ -44,6 +44,14 @@ bool Store::add_customer(Person customer) {
   customers_[num_customers_] = customer;
   return true; 
 }
+bool Store::add_transaction(transaction trans) {
+  if(num_transactions_ > std::size(transactions_)-1) {
+    return false; // not enough space in array
+  }
+  num_transactions_ += 1;
+  transactions_[num_transactions_] = trans;
+  return true; 
+}
 
 bool Store::update_customer(int index, Person customer) {
   if(index < 0 || index > std::size(customers_)){ // index out of bounds
@@ -52,6 +60,27 @@ bool Store::update_customer(int index, Person customer) {
   customers_[index] = customer;
   return true;
 }
+Person Store::get_customer(int index) {
+  return customers_[index];
+}
 product Store::get_product(int index) {
   return products_[index];
+}
+std::string Store::store_info() {
+  std::string out_string = "";
+  out_string += "Products: \n Count: " + std::to_string(num_products()) + '\n';
+  for(int i =0; i < num_products(); i++) {
+    product* product = &Store::products_[i];
+    if(product != nullptr) {
+      out_string += product->product_info();
+    }
+  }
+  out_string += "\nTransactions: \nCount: " + std::to_string(num_transactions())+'\n';
+  for(int i =0; i < num_transactions(); i++) {
+    transaction* transaction = &Store::transactions_[i];
+    if(transaction != nullptr) {
+      out_string += transaction->transaction_info();
+    }
+  }
+  return out_string;
 }
