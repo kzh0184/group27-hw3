@@ -38,16 +38,17 @@ int main()
 		return 1;
 	}
 	int num_cc = 0;
-	cc_file >> num_cc;
-	cc_file.ignore(); // ignore the newline character after the number of credit cards
-
+	cc_file >> num_cc ;
+  // cout << num_cc << '\n';
+  cc_file.ignore();
 
 	//add to store and other variables
 	Store store1;
-	store1.num_customers(num_people);
+	// store1.num_customers(num_people);
+
 	for (int i = 0; i < num_people; i++)
 	{
-		///read from people.txt
+		//read from people.txt
 		string name, phone, line1, line2, city, state, zip;
 		getline(people_file, name);
 		getline(people_file, phone);
@@ -57,20 +58,32 @@ int main()
 		getline(people_file, state);
 		getline(people_file, zip);
 
-		///read from credit_cards.txt
+		address temp_address = {line1, line2, city, state, zip};
+    // start everyone on a dummy card 
+    credit_card dummy{0,0,0};
+		Person temp_person = {name, phone, temp_address, dummy};
+		store1.add_customer(temp_person);
+  }
+
+  //read from credit_cards.txt
+	for (int i = 0; i < num_people; i++){
 		int cc;
 		double cc_limit, cc_balance;
-		cc_file >> cc;
-		cc_file >> cc_limit;
-		cc_file >> cc_balance;
-		cc_file.ignore(); // ignore the newline character
-
-		///temp address, credit card, and person objects
-		address temp_address{line1, line2, city, state, zip};
+    std::string name;
+    getline(cc_file, name); // do nothing with name other than skip the line 
+    cc_file >> cc >> cc_limit >> cc_balance;
+    cc_file.ignore();
 		credit_card temp_cc{cc, cc_limit, cc_balance};
-		Person temp_person{name, phone, temp_address, temp_cc};
-		store1.add_customer(temp_person);
 
+    // loop through and assign credit card to right person
+	  for (int i = 0; i < num_people; i++){
+      Person p = store1.get_customer(i);
+      if(p.name() == name) {
+        p.person_credit_card(temp_cc);
+        store1.update_customer(i, p);
+        break;
+      }
+    }
 	}
 	people_file.close();
 	cc_file.close();
@@ -98,7 +111,6 @@ int main()
 		product temp_product{product_name, product_description, product_price};
 		store1.add_product(temp_product);
 	}
-  std::cout << store1.num_products() << '\n';
 	product_file.close();
 	
 	//print store info after you finish importing info
@@ -116,6 +128,7 @@ int main()
   transaction purchase;
 
   for(int i = 0; i < num_transactions; i++){
+    // TODO: add logic to fail transaction if person runs out of money
     purchase.purchased_item = store1.get_product(product_distrib(gen));
     purchase.quantity= product_distrib(gen);
     purchase.transaction_number = store1.num_transactions() + 1;
@@ -125,6 +138,6 @@ int main()
   }
 
 	//print store info at the end
-	cout << "Store info: " << endl << endl;
-	cout << store1.store_info() << endl << endl;
+	// cout << "Store info: " << endl << endl;
+	// cout << store1.store_info() << endl << endl;
 }
