@@ -104,8 +104,8 @@ int main() {
 
   // print store info after you finish importing info
   // from text files and add them to your store
-  cout << "Store info: " << endl << endl;
-  cout << store1.store_info() << endl << endl;
+  cout << "Store info: \n\n";
+  cout << store1.store_info() << "\n\n";
 
   // make random number of random transactions
   std::random_device rd;
@@ -126,10 +126,12 @@ int main() {
     purchase.transaction_number = store1.num_transactions() + 1;
     purchase.purchased_item = store1.get_product(product_distrib(gen));
     purchase.customer = store1.get_customer(person_distrib(gen));
-    store1.add_transaction(purchase);
+    if(!store1.add_transaction(purchase)){
+      std::cout << "transaction failed\n";
+    }
   }
 
   // print store info at the end
-  cout << "Store info: " << endl << endl;
-  cout << store1.store_info() << endl << endl;
+  cout << "Store info: \n\n";
+  cout << store1.store_info() << "\n\n";
 }

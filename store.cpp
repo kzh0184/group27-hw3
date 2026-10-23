@@ -45,9 +45,13 @@ bool Store::add_transaction(transaction trans) {
   if (num_transactions_ > std::size(transactions_) - 1) {
     return false; // not enough space in array
   }
-  num_transactions_ += 1;
-  transactions_[num_transactions_] = trans;
-  return true;
+  if(trans.customer.person_credit_card().make_purchase(trans.purchased_item.price * trans.quantity)) {
+    num_transactions_ += 1;
+    transactions_[num_transactions_] = trans;
+    return true;
+  } else {
+    return false; // fail the transaction
+  }
 }
 
 bool Store::update_customer(int index, Person customer) {
