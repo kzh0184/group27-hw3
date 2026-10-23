@@ -12,7 +12,7 @@ class Store
 	Person customers_[100];
 	int num_products_; //how many products are in the products_[]
 	product products_[100];
-	int num_transactions_; //how many transactions are stored in the 
+	int num_transactions_ =0; //how many transactions are stored in the 
 						  //transactions_[]
 	transaction transactions_[100];
 
