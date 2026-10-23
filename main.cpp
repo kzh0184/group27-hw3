@@ -106,8 +106,28 @@ int main()
 	cout << store1.store_info() << endl << endl;
 
 	//make random number of random transactions
+	int number_of_random_transactions = rand() % 90 + 10; // random number between 10 and 100
+	for (int i = 0; i < number_of_random_transactions; i++)
+	{
+		//randomly select a customer and product
+		int random_customer_num = rand() % store1.num_customers();
+		int random_product_num = rand() % store1.num_products();
+		Person random_customer = store1.get_customer(random_customer_num);
+		product random_product = store1.get_product(random_product_num);
 
+		//attempt to make a purchase
+		bool purchase_successful = store1.make_purchase(random_customer, random_product, random_customer_num);
+		if (purchase_successful == true)
+		{
+			cout << "Purchase successful for customer: " << random_customer.name() << " buying product: " << random_product.name << endl;
+		}
+		else
+		{
+			cout << "Purchase failed for customer: " << random_customer.name() << " buying product: " << random_product.name << endl;
+		}
+	}
 	//print store info at the end
 	cout << "Store info: " << endl << endl;
 	cout << store1.store_info() << endl << endl;
 }
+
