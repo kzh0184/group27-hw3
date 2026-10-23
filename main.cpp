@@ -107,31 +107,29 @@ int main() {
   cout << "Store info: \n\n";
   cout << store1.store_info() << "\n\n";
 
-  // make random number of random transactions
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  // random amount of transactions;
-  std::uniform_int_distribution<> transaction_distrib(1, 100);
-  // random product;
-  std::uniform_int_distribution<> product_distrib(1, 10);
-  // random buyer;
-  std::uniform_int_distribution<> person_distrib(1, store1.num_customers());
-  int num_transactions = transaction_distrib(gen);
-  transaction purchase;
+	//make random number of random transactions
+	int number_of_random_transactions = rand() % 90 + 10; // random number between 10 and 100
+	for (int i = 0; i < number_of_random_transactions; i++)
+	{
+		//randomly select a customer and product
+		int random_customer_num = rand() % store1.num_customers();
+		int random_product_num = rand() % store1.num_products();
+		Person random_customer = store1.get_customer(random_customer_num);
+		product random_product = store1.get_product(random_product_num);
 
-  for (int i = 0; i < num_transactions; i++) {
-    // TODO: add logic to fail transaction if person runs out of money
-    purchase.purchased_item = store1.get_product(product_distrib(gen));
-    purchase.quantity = product_distrib(gen);
-    purchase.transaction_number = store1.num_transactions() + 1;
-    purchase.purchased_item = store1.get_product(product_distrib(gen));
-    purchase.customer = store1.get_customer(person_distrib(gen));
-    if(!store1.add_transaction(purchase)){
-      std::cout << "transaction failed\n";
-    }
-  }
-
-  // print store info at the end
-  cout << "Store info: \n\n";
-  cout << store1.store_info() << "\n\n";
+		//attempt to make a purchase
+		bool purchase_successful = store1.make_purchase(random_customer, random_product, random_customer_num);
+		if (purchase_successful == true)
+		{
+			cout << "Purchase successful for customer: " << random_customer.name() << " buying product: " << random_product.name << endl;
+		}
+		else
+		{
+			cout << "Purchase failed for customer: " << random_customer.name() << " buying product: " << random_product.name << endl;
+		}
+	}
+	//print store info at the end
+	cout << "Store info: " << endl << endl;
+	cout << store1.store_info() << endl << endl;
 }
+
