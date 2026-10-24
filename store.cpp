@@ -69,6 +69,41 @@ Person Store::get_customer(int index) { return customers_[index]; }
 
 product Store::get_product(int index) { return products_[index]; }
 
+bool Store::make_purchase(Person customer, product item, int amount) {
+  if (amount < 1) {
+    return false;
+  }
+  int index = -1;
+  for (int i = 0; i < num_customers_; i++) {
+    if (customers_[i].name() == customer.name()) {
+      index = i;
+      break;
+    }
+  }
+  if (index < 0) {
+    return false;
+  }
+  if (num_transactions_ > std::size(transactions_) - 1) {
+    return false; // not enough space in array
+  }
+  Person stored = customers_[index];
+  credit_card card = stored.person_credit_card();
+  if (!card.make_purchase(item.price * amount)) {
+    return false;
+  }
+  stored.person_credit_card(card);
+  update_customer(index, stored);
+  transaction purchase;
+  purchase.transaction_number = num_transactions_ + 1;
+  purchase.customer = stored;
+  purchase.purchased_item = item;
+  purchase.quantity = amount;
+  transactions_[num_transactions_] = purchase;
+  num_transactions_ += 1;
+  return true;
+}
+
+
 std::string Store::store_info() {
   std::string out_string = "";
   out_string +=

@@ -42,7 +42,7 @@ std::string Person::person_info() {
   std::string message = "";
   message += "Name: " + name() + "\n";
   message += "Phone: " + phone() + "\n";
-  message += "Address: " + person_address().address_info() + "\n";
-  message += "Credit Card: " + person_credit_card().credit_card_info() + "\n";
+  message += "Address:\n" + person_address().address_info();
+  message += "Credit Card:\n" + person_credit_card().credit_card_info();
   return message;
 }
