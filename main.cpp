@@ -104,10 +104,10 @@ int main() {
 
   // print store info after you finish importing info
   // from text files and add them to your store
-  cout << "----------------------------------------\n";
+  cout << "-----------------------------------------------------------------------\n";
   cout << "Store info: \n\n";
   cout << store1.store_info() << "\n\n";
-  cout << "----------------------------------------\n";
+  cout << "-----------------------------------------------------------------------\n";
   cout << "All Transactions: \n\n";
 
 	//make random number of random transactions
@@ -133,6 +133,7 @@ int main() {
       cout << "Product: \n";
       cout << random_product.product_info();
       cout << "Quantity: " << random_quantity << "\n\n";
+      cout << "--------------------------------------------\n";
 
 		}
 		else
@@ -144,9 +145,11 @@ int main() {
       cout << "Product: \n";
       cout << random_product.product_info();
       cout << "Purchase Quantity: " << random_quantity << "\n\n";
+      cout << "--------------------------------------------\n";
 		}
 	}
 	//print store info at the end
+  cout << "-----------------------------------------------------------------------\n";
 	cout << "Store info: " << endl << endl;
 	cout << store1.store_info() << endl << endl;
 }
