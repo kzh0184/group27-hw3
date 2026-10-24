@@ -25,13 +25,13 @@ bool credit_card::make_payment(double payment_amount) {
 
 // method to print credit card details
 std::string credit_card::credit_card_info() {
-  std::string message = "Number: ";
+  std::string message = "Credit card number: ";
   message += std::to_string(cc_number);
-  message += "\nLimit: ";
+  message += "\nCredit Card Limit: $";
   std::string limit_str = std::to_string(limit);
   limit_str = limit_str.substr(0, limit_str.find('.') + 3);
   message += limit_str;
-  message += "\nCurrent Balance: ";
+  message += "\nCurrent Balance: $";
   std::string balance_str = std::to_string(current_balance);
   balance_str = balance_str.substr(0, balance_str.find('.') + 3);
   message += balance_str;
