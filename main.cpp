@@ -104,28 +104,46 @@ int main() {
 
   // print store info after you finish importing info
   // from text files and add them to your store
+  cout << "----------------------------------------\n";
   cout << "Store info: \n\n";
   cout << store1.store_info() << "\n\n";
+  cout << "----------------------------------------\n";
+  cout << "All Transactions: \n\n";
 
 	//make random number of random transactions
-	int number_of_random_transactions = rand() % 90 + 10; // random number between 10 and 100
+	int number_of_random_transactions = rand() % 90 + 10; // rand number of transactions from 10 to 100
 	for (int i = 0; i < number_of_random_transactions; i++)
 	{
 		//randomly select a customer and product
-		int random_customer_num = rand() % store1.num_customers();
-		int random_product_num = rand() % store1.num_products();
+		int random_customer_num = rand() % store1.num_customers(); // rand customer number
+		int random_product_num = rand() % store1.num_products(); // rand product
+    int random_quantity = rand() % 10 + 1;
 		Person random_customer = store1.get_customer(random_customer_num);
 		product random_product = store1.get_product(random_product_num);
 
 		//attempt to make a purchase
-		bool purchase_successful = store1.make_purchase(random_customer, random_product, random_customer_num);
+		bool purchase_successful = store1.make_purchase(random_customer, random_product, random_quantity);
 		if (purchase_successful == true)
 		{
-			cout << "Purchase successful for customer: " << random_customer.name() << " buying product: " << random_product.name << endl;
+			cout << "Successful transaction!\n";
+      cout << "Transaction Details:\n";
+      cout << "Transaction #: " << store1.num_transactions() << "\n";
+      cout << "Customer: \n";
+      cout << store1.get_customer(random_customer_num).person_info();
+      cout << "Product: \n";
+      cout << random_product.product_info();
+      cout << "Quantity: " << random_quantity << "\n\n";
+
 		}
 		else
 		{
-			cout << "Purchase failed for customer: " << random_customer.name() << " buying product: " << random_product.name << endl;
+			cout << "Unsuccessfull transaction!\n";
+      cout << "Transaction Details:\n";
+      cout << "Person: \n";
+      cout << random_customer.person_info();
+      cout << "Product: \n";
+      cout << random_product.product_info();
+      cout << "Purchase Quantity: " << random_quantity << "\n\n";
 		}
 	}
 	//print store info at the end
